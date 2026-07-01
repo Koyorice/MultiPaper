@@ -1,0 +1,133 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Koyorice <87787929+Koyorice@users.noreply.github.com>
+Date: Thu, 2 Oct 2025 16:08:23 +0800
+Subject: [PATCH] Rebrand to MultiPaper
+
+
+diff --git a/net/minecraft/server/Main.java b/net/minecraft/server/Main.java
+index 1862df44a3319e459b547cebffb16972674856d6..6af61faa374dcd02e03e8d737600fa77684ce9fe 100644
+--- a/net/minecraft/server/Main.java
++++ b/net/minecraft/server/Main.java
+@@ -176,6 +176,17 @@ public class Main {
+             }
+             // Paper end - Detect headless JRE
+ 
++            // MultiPaper start - Rebrand to MultiPaper
++            puregero.multipaper.config.MultiPaperConfigurationLoader.init((File) options.valueOf("multipaper-settings"));
++            // remember this property even after config reloads
++            System.setProperty("multipaper.master-connection.my-name", puregero.multipaper.config.MultiPaperConfiguration.get().masterConnection.myName);
++            // start connection
++            puregero.multipaper.MultiPaper.getConnection();
++            // reload the config in case it was changed during the sync
++            puregero.multipaper.MultiPaperFileSyncer.init();
++            puregero.multipaper.config.MultiPaperConfigurationLoader.init((File) options.valueOf("multipaper-settings"));
++            // MultiPaper end - Rebrand to MultiPaper
++
+             org.spigotmc.SpigotConfig.disabledAdvancements = spigotConfiguration.getStringList("advancements.disabled"); // Paper - fix SPIGOT-5885, must be set early in init
+ 
+             // Paper start - fix SPIGOT-5824
+diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
+index ece422ef99fbb30365b53599e985c1ff005b7477..6986c0c9d5022738c6362653e78eebbd72806237 100644
+--- a/net/minecraft/server/MinecraftServer.java
++++ b/net/minecraft/server/MinecraftServer.java
+@@ -1024,6 +1024,43 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+             this.cancelRecordingMetrics();
+         }
+ 
++        // MultiPaper start - Rebrand to MultiPaper
++        // add a watchdog to the server stopping
++        Thread shutdownWatchdog = new Thread(() -> {
++            long start = System.currentTimeMillis();
++            int count = 0;
++            while (true) {
++                try {
++                    Thread.sleep(10000);
++                } catch (InterruptedException e) {
++                    throw new RuntimeException(e);
++                }
++                LOGGER.error("The server has not stopped after {} seconds! Creating thread dump", (System.currentTimeMillis() - start) / 1000);
++                if (shutdownThread.isAlive()) {
++                    LOGGER.error("{} Stack:", shutdownThread.getName());
++                    for (StackTraceElement element : shutdownThread.getStackTrace()) {
++                        LOGGER.error("{}", element);
++                    }
++                } else {
++                    LOGGER.error("The shutdown thread isn't alive!!!");
++                }
++
++                if ((++count) % 6 == 0) {
++                    LOGGER.error("All thread stacks:");
++                    for (Map.Entry<Thread, StackTraceElement[]> entry : Thread.getAllStackTraces().entrySet()) {
++                        Thread thread = entry.getKey();
++                        LOGGER.error("{} Stack:", thread.getName());
++                        for (StackTraceElement element : entry.getValue()) {
++                            LOGGER.error("{}", element);
++                        }
++                    }
++                }
++            }
++        }, "Stopping-Watchdog");
++        shutdownWatchdog.setDaemon(true);
++        shutdownWatchdog.start();
++        // MultiPaper end - Rebrand to MultiPaper
++
+         LOGGER.info("Stopping server");
+         Commands.COMMAND_SENDING_POOL.shutdownNow(); // Paper - Perf: Async command map building; Shutdown and don't bother finishing
+         // Purpur start - UPnP Port Forwarding
+@@ -1107,6 +1144,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+             ca.spottedleaf.moonrise.common.util.MoonriseCommon.haltExecutors();
+         }
+         // Paper end - rewrite chunk system
++        // MultiPaper start - Rebrand to MultiPaper
++        LOGGER.info("Flushing MultiPaper Master connection");
++        puregero.multipaper.MultiPaper.flushMasterConnectionAsync().join();
++        LOGGER.info("Closing MultiPaper File Syncer");
++        puregero.multipaper.MultiPaperFileSyncer.onStop().join();
++        // MultiPaper end - Rebrand to MultiPaper
+         // Paper start - Improved watchdog support - move final shutdown items here
+         Util.shutdownExecutors();
+         this.onServerExit();
+@@ -1704,6 +1747,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+         this.smoothedTickTimeMillis = this.smoothedTickTimeMillis * 0.8F + (float)tickTime / (float)TimeUtil.NANOSECONDS_PER_MILLISECOND * 0.19999999F;
+         this.logTickMethodTime(nano);
+         profiler.pop();
++        puregero.multipaper.MultiPaper.sendTickTime(tickTime, this.getTPS()[0]); // MultiPaper - Rebrand to MultiPaper - add sendTickTime
+     }
+ 
+     protected void processPacketsAndTick(final boolean sprinting) {
+@@ -1870,6 +1914,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+             level.explosionDensityCache.clear(); // Paper - Optimize explosions
+         }
+         this.isIteratingOverLevels = false; // Paper - Throw exception on world create while being ticked
++        puregero.multipaper.MultiPaperDirtyCraftPersistentDataContainer.tick(); // MultiPaper - Rebrand to MultiPaper
+ 
+         profiler.popPush("connection");
+         this.tickConnection();
+@@ -2073,6 +2118,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+             level.setSpawnSettings(level.isSpawningMonsters());
+             level.players().forEach(this::sendDifficultyUpdate);
+             // Paper end - per level difficulty
++            if (!puregero.multipaper.externalserverprotocol.DifficultyUpdatePacket.updatingDifficulty) puregero.multipaper.MultiPaper.broadcastPacketToExternalServers(level.uuid, new puregero.multipaper.externalserverprotocol.DifficultyUpdatePacket(level)); // MultiPaper - Rebrand to MultiPaper
+         }
+     }
+ 
+diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
+index 9b198882584e7fd41b88e3a23c76f7230fc7db45..e2c50c8b3088a4fe8f73531106f58fc9de0bea67 100644
+--- a/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -296,6 +296,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+             this.setPort(properties.serverPort);
+         }
+         bindAddress = new java.net.InetSocketAddress(localAddress, this.getPort());
++        puregero.multipaper.MultiPaper.setPort(this.getPort()); // MultiPaper - Rebrand to MultiPaper
+         }
+         // Paper end - Unix domain socket support
+ 
+@@ -443,6 +444,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+     public void setUsingWhitelist(final boolean usingWhitelist) {
+         new com.destroystokyo.paper.event.server.WhitelistToggleEvent(usingWhitelist).callEvent(); // Paper - WhitelistToggleEvent
+         this.settings.update(p -> p.whiteList.update(this.registryAccess(), usingWhitelist));
++        if (!puregero.multipaper.externalserverprotocol.WhitelistTogglePacket.updatingWhitelistToggle) puregero.multipaper.MultiPaper.broadcastPacketToExternalServers(new puregero.multipaper.externalserverprotocol.WhitelistTogglePacket(usingWhitelist)); // MultiPaper - Rebrand to MultiPaper
+     }
+ 
+     @Override
