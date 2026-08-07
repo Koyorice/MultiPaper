@@ -5,7 +5,7 @@ Subject: [PATCH] Sync entity
 
 
 diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/ChunkEntitySlices.java b/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/ChunkEntitySlices.java
-index 8d9ce3d301d5f7e4106587ae00adb8dd5b8b6f88..04ef5dc26c6b463df62aaa06bd9196b4602b3c6a 100644
+index 5b7ed8e5067683143c99473a126e17baa531903c..2fda07f8e4f2b84808574b779f245565794477ad 100644
 --- a/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/ChunkEntitySlices.java
 +++ b/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/ChunkEntitySlices.java
 @@ -51,7 +51,7 @@ public final class ChunkEntitySlices {
@@ -42,7 +42,7 @@ index 8d9ce3d301d5f7e4106587ae00adb8dd5b8b6f88..04ef5dc26c6b463df62aaa06bd9196b4
  
          return this.entities.size() != 0;
 diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java b/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java
-index 56e71bf01f22579c294c6b33450bd282e082f6ae..428afabd2d5f97341bc8f0f14d08737c1a78ceb7 100644
+index 328784ba08236553e49d62320b79f7222292412f..c024c61a34ee66133a73019023ad9b4052f7a9e0 100644
 --- a/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java
 +++ b/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java
 @@ -97,6 +97,17 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
@@ -63,7 +63,7 @@ index 56e71bf01f22579c294c6b33450bd282e082f6ae..428afabd2d5f97341bc8f0f14d08737c
      @Override
      public Entity get(final int id) {
          return maskNonAccessible(this.entityById.get((long)id));
-@@ -439,8 +450,8 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
+@@ -443,8 +454,8 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
          ((ChunkSystemEntity)entity).moonrise$setSectionX(sectionX);
          ((ChunkSystemEntity)entity).moonrise$setSectionY(sectionY);
          ((ChunkSystemEntity)entity).moonrise$setSectionZ(sectionZ);
@@ -74,7 +74,7 @@ index 56e71bf01f22579c294c6b33450bd282e082f6ae..428afabd2d5f97341bc8f0f14d08737c
              LOGGER.warn("Entity " + entity + " added to world '" + WorldUtil.getWorldName(this.world) + "', but was already contained in entity chunk (" + sectionX + "," + sectionZ + ")");
          }
  
-@@ -475,13 +486,13 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
+@@ -479,13 +490,13 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
          final ChunkEntitySlices slices = this.getChunk(sectionX, sectionZ);
          // all entities should be in a chunk
          if (slices == null) {
@@ -90,7 +90,7 @@ index 56e71bf01f22579c294c6b33450bd282e082f6ae..428afabd2d5f97341bc8f0f14d08737c
              }
          }
          ((ChunkSystemEntity)entity).moonrise$setSectionX(Integer.MIN_VALUE);
-@@ -537,13 +548,13 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
+@@ -541,13 +552,13 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
          this.checkThread(sectionX, sectionZ, "Cannot move entity off-main");
  
          final ChunkEntitySlices old = this.getChunk(sectionX, sectionZ);
@@ -108,7 +108,7 @@ index 56e71bf01f22579c294c6b33450bd282e082f6ae..428afabd2d5f97341bc8f0f14d08737c
              LOGGER.warn("Could not add entity " + entity + " to its new chunk section (" + newSectionX + "," + newSectionY + "," + newSectionZ + ") as it is already contained in the section");
          }
  
-@@ -551,7 +562,7 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
+@@ -555,7 +566,7 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
          ((ChunkSystemEntity)entity).moonrise$setSectionY(newSectionY);
          ((ChunkSystemEntity)entity).moonrise$setSectionZ(newSectionZ);
  
@@ -166,10 +166,10 @@ index 203447556dda19df6a6ea812675253362cf12d45..bf65eb283c031747329ce88a6e5f3ff3
              this.lastEntitySaveNull = save == null;
              if (entitySave != null) {
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index 8f79afd21a06adf67fa553512581a6b16f8316c2..edb26e7bcd859955f10b1fe0a0a18818cb6441ae 100644
+index 9a26b6ecf21f53c7e00fc8b1b1d907efd51cd6c2..29e1e2fbd7c7cc3b91e97305c0d51dc0c4de48f8 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
-@@ -1322,7 +1322,17 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -1345,7 +1345,17 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
  
          @Override
          public void sendToTrackingPlayers(final Packet<? super ClientGamePacketListener> packet) {
@@ -187,7 +187,7 @@ index 8f79afd21a06adf67fa553512581a6b16f8316c2..edb26e7bcd859955f10b1fe0a0a18818
                  connection.send(packet);
              }
          }
-@@ -1337,8 +1347,18 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -1360,8 +1370,18 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
  
          @Override
          public void sendToTrackingPlayersFiltered(final Packet<? super ClientGamePacketListener> packet, final Predicate<ServerPlayer> targetPredicate) {
@@ -259,10 +259,10 @@ index 81ed0bc7b685f34101085b986ec391ba70ab29af..d26723ea28268a43431036b1c9185250
          this.sendPairingData(player, packets::add);
          player.connection.send(new ClientboundBundlePacket(packets));
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 66560a8d982559511dd55a4c3cbc53e2410e435e..0b55c25e56de6100171e2296dcf3862e8cb26392 100644
+index ba41bdd1d63b9f677c471f4ec5ba9ee3e68672ea..1935652db020f1b1714299590802b074f6b5e804 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -775,7 +775,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -776,7 +776,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
          int id = 0;
  
          while (id == 0 || this.chunkSource.hasEntityWithId(id)) {
@@ -271,7 +271,7 @@ index 66560a8d982559511dd55a4c3cbc53e2410e435e..0b55c25e56de6100171e2296dcf3862e
          }
  
          return id;
-@@ -904,6 +904,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -905,6 +905,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              this.entityTickList
                  .forEach(
                      entity -> {
@@ -312,7 +312,7 @@ index 66560a8d982559511dd55a4c3cbc53e2410e435e..0b55c25e56de6100171e2296dcf3862e
      public Collection<EnderDragonPart> dragonParts() {
          return this.dragonParts.values();
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 215c1afc8f4380bf9d6a246fc0560b7f9236642e..e1df9e94199dffdc0342ae8f5dc663351a091c6a 100644
+index 46cc56bb08dd709af5bf521d1d3b822b9f83d882..248c43b6825bc0d9e5ed9e4d8ee356fceb6a93f4 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -608,7 +608,9 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -325,7 +325,7 @@ index 215c1afc8f4380bf9d6a246fc0560b7f9236642e..e1df9e94199dffdc0342ae8f5dc66335
          }
      }
  
-@@ -1697,7 +1699,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1676,7 +1678,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      @Override
      public void take(final Entity entity, final int orgCount) {
          super.take(entity, orgCount);
@@ -335,7 +335,7 @@ index 215c1afc8f4380bf9d6a246fc0560b7f9236642e..e1df9e94199dffdc0342ae8f5dc66335
  
      // CraftBukkit start - moved bed result checks from below into separate method
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d65d967b5 100644
+index 2ccc15e2294b1b0475ae0574c637544279c28095..2f9d6b42506b76d62cceb64aa96776dd6fc1c9dd 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -317,6 +317,10 @@ public abstract class Entity
@@ -568,7 +568,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              if (!Double.isFinite(this.getX()) || !Double.isFinite(this.getY()) || !Double.isFinite(this.getZ())) {
                  throw new IllegalStateException("Entity has invalid position");
              }
-@@ -2967,7 +3112,7 @@ public abstract class Entity
+@@ -2963,7 +3108,7 @@ public abstract class Entity
      }
  
      public final @Nullable String getEncodeId(final boolean includeNonSaveable) {
@@ -577,7 +577,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              // Paper end - Raw entity serialization API
              return null;
          }
-@@ -3405,7 +3550,7 @@ public abstract class Entity
+@@ -3401,7 +3546,7 @@ public abstract class Entity
              if (entityToRide.getBukkitEntity() instanceof org.bukkit.entity.Vehicle && this.getBukkitEntity() instanceof org.bukkit.entity.LivingEntity) {
                  org.bukkit.event.vehicle.VehicleEnterEvent event = new org.bukkit.event.vehicle.VehicleEnterEvent((org.bukkit.entity.Vehicle) entityToRide.getBukkitEntity(), this.getBukkitEntity());
                  // Suppress during worldgen
@@ -586,7 +586,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
                      org.bukkit.Bukkit.getPluginManager().callEvent(event);
                  }
                  if (event.isCancelled()) {
-@@ -3415,7 +3560,7 @@ public abstract class Entity
+@@ -3411,7 +3556,7 @@ public abstract class Entity
  
              org.bukkit.event.entity.EntityMountEvent event = new org.bukkit.event.entity.EntityMountEvent(this.getBukkitEntity(), entityToRide.getBukkitEntity());
              // Suppress during worldgen
@@ -595,7 +595,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
                  org.bukkit.Bukkit.getPluginManager().callEvent(event);
              }
              if (event.isCancelled()) {
-@@ -3460,6 +3605,16 @@ public abstract class Entity
+@@ -3456,6 +3601,16 @@ public abstract class Entity
          }
      }
  
@@ -612,7 +612,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
      public void removeVehicle() {
          // Paper start - Force entity dismount during teleportation
          this.removeVehicle(false);
-@@ -3476,6 +3631,7 @@ public abstract class Entity
+@@ -3472,6 +3627,7 @@ public abstract class Entity
              if (removalReason == null || removalReason.shouldDestroy()) {
                  this.level().gameEvent(this, GameEvent.ENTITY_DISMOUNT, oldVehicle.position);
              }
@@ -620,7 +620,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              // MultiPaper start - Sync player
              // inform other servers that the player is no longer riding the entity and hand them the entity's data
              ca.spottedleaf.moonrise.patches.chunk_system.scheduling.NewChunkHolder newChunkHolder = puregero.multipaper.MultiPaper.getChunkHolder(oldVehicle);
-@@ -3494,6 +3650,23 @@ public abstract class Entity
+@@ -3490,6 +3646,23 @@ public abstract class Entity
          }
      }
  
@@ -644,7 +644,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
      public void stopRiding() {
          // Paper start - Force entity dismount during teleportation
          this.stopRiding(false);
-@@ -3549,7 +3722,7 @@ public abstract class Entity
+@@ -3545,7 +3718,7 @@ public abstract class Entity
                      (org.bukkit.entity.LivingEntity) passenger.getBukkitEntity(), !suppressCancellation // Paper - Force entity dismount during teleportation
              );
              // Suppress during worldgen
@@ -653,7 +653,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
                  org.bukkit.Bukkit.getPluginManager().callEvent(event);
              }
              org.bukkit.craftbukkit.entity.CraftEntity craftn = (org.bukkit.craftbukkit.entity.CraftEntity) passenger.getBukkitEntity().getVehicle();
-@@ -3561,7 +3734,7 @@ public abstract class Entity
+@@ -3557,7 +3730,7 @@ public abstract class Entity
  
          org.bukkit.event.entity.EntityDismountEvent event = new org.bukkit.event.entity.EntityDismountEvent(passenger.getBukkitEntity(), this.getBukkitEntity(), !suppressCancellation); // Paper - Force entity dismount during teleportation
          // Suppress during worldgen
@@ -662,7 +662,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              org.bukkit.Bukkit.getPluginManager().callEvent(event);
          }
          if (event.isCancelled()) {
-@@ -4200,6 +4373,13 @@ public abstract class Entity
+@@ -4196,6 +4369,13 @@ public abstract class Entity
          }
          // Paper end - Fix item duplication and teleport issues
          if (this.level() instanceof ServerLevel serverLevel && !this.isRemoved()) {
@@ -676,7 +676,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              // CraftBukkit start
              PositionMoveRotation absolutePosition = PositionMoveRotation.calculateAbsolute(PositionMoveRotation.of(this), PositionMoveRotation.of(transition), transition.relatives());
              Vec3 velocity = absolutePosition.deltaMovement(); // Paper
-@@ -4793,7 +4973,7 @@ public abstract class Entity
+@@ -4796,7 +4976,7 @@ public abstract class Entity
          return false;
      }
  
@@ -685,7 +685,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
          if (this.passengers.isEmpty()) { return Stream.of(); } // Paper - Optimize indirect passenger iteration
          return this.passengers.stream().flatMap(Entity::getSelfAndPassengers);
      }
-@@ -5054,6 +5234,7 @@ public abstract class Entity
+@@ -5057,6 +5237,7 @@ public abstract class Entity
      public void addDeltaMovement(final Vec3 momentum) {
          if (momentum.isFinite()) {
              this.setDeltaMovement(this.getDeltaMovement().add(momentum));
@@ -693,7 +693,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
          }
      }
  
-@@ -5158,6 +5339,13 @@ public abstract class Entity
+@@ -5161,6 +5342,13 @@ public abstract class Entity
              int fx = Mth.floor(x);
              int fy = Mth.floor(y);
              int fz = Mth.floor(z);
@@ -707,7 +707,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              if (fx != this.blockPosition.getX() || fy != this.blockPosition.getY() || fz != this.blockPosition.getZ()) {
                  this.blockPosition = new BlockPos(fx, fy, fz);
                  this.inBlockState = null;
-@@ -5304,6 +5492,12 @@ public abstract class Entity
+@@ -5307,6 +5495,12 @@ public abstract class Entity
          // Paper end - rewrite chunk system
          org.bukkit.craftbukkit.event.CraftEventFactory.callEntityRemoveEvent(this, cause); // CraftBukkit
          final boolean alreadyRemoved = this.removalReason != null; // Paper - Folia schedulers
@@ -720,7 +720,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
          if (this.removalReason == null) {
              this.removalReason = reason;
          }
-@@ -5349,7 +5543,7 @@ public abstract class Entity
+@@ -5352,7 +5546,7 @@ public abstract class Entity
  
      @Override
      public boolean shouldBeSaved() {
@@ -729,7 +729,7 @@ index aec0bba2f60338b5f39785bbb7d2b0526e820dec..40dd06c63acd8e2cdd3babc397a4793d
              && !this.isPassenger()
              && (!this.isVehicle() || !((ca.spottedleaf.moonrise.patches.chunk_system.entity.ChunkSystemEntity)this).moonrise$hasAnyPlayerPassengers()); // Paper - rewrite chunk system
      }
-@@ -5609,4 +5803,19 @@ public abstract class Entity
+@@ -5612,4 +5806,19 @@ public abstract class Entity
          return false;
      }
      // Purpur end - Ridables
@@ -772,7 +772,7 @@ index 98034a4c96bf2972316078d3b3a49140921aab50..c2156153ea69c5d22f5da046053ed35b
                  }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 769acea46e91e07b711fbc6a92cfcad0564f5463..2616c0b3674e44007e38c04d8cc44a5f312d45cf 100644
+index 2941842157754d71163632573e3eab7a9d9b496b..646ed86e7ff0d739d7c0a962e6f814eab161b745 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -611,6 +611,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -1040,7 +1040,7 @@ index 7f3673a44b0200d18dbf7f1fac8d377bfc994232..fd9fd2ad3ca932b93ce236154ef16d7d
              Entity entityHit = entityHitResult.getEntity();
              if (entityHit.is(EntityTypeTags.REDIRECTABLE_PROJECTILE) && entityHit instanceof Projectile projectile) {
 diff --git a/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl.java b/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl.java
-index b4250e23ff0b522bcb4118af9772e579dfa64c46..e08e14e15a57bc6add5dc8339956e33ea5c5448c 100644
+index 578eefd44f0eaba4f2de3cfe58dedb70b9bcc60e..98a88ed3d4fa1317d4184468dc2e4962d0b95fc4 100644
 --- a/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl.java
 +++ b/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl.java
 @@ -98,7 +98,7 @@ public class ThrownEnderpearl extends ThrowableItemProjectile {

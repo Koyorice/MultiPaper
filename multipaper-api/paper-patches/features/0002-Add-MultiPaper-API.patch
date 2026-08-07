@@ -31,7 +31,7 @@ index 15b12abe17dadf0fc9eeee36de4b2ff2b1b52cbc..010f576214ecff744918c1f5517b9be4
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index e9658f8377b9d91e117360ce44db8710b59f0499..a8efe466b4c6967add0d8c6df1674c9c546828e0 100644
+index 2c39beef3747d0dfd15a6e08269382e7b5a55d36..45ce5693b0577d04e199af6bbc3ae4faf70a99e3 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -173,8 +173,11 @@ public final class Bukkit {
@@ -224,7 +224,7 @@ index 1a89e738b7923553d1080ecd497ad60d34dd0f37..972111bd6d22cc202b9497197c176017
       * Adds the location by another.
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 2c895293585fede17057744dc230c0635778f83b..21c309ceea139f290e79aadc534f8db6c58f3496 100644
+index d277417d2bd66b84f293e9b3858b5096a3a86fe4..fb22e801b6a48f98ab4b24c8f720ab7653d3b865 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -135,8 +135,11 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
@@ -345,10 +345,10 @@ index 2c895293585fede17057744dc230c0635778f83b..21c309ceea139f290e79aadc534f8db6
       * Gets a list of all worlds on this server.
       *
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 356299bafa86b90549279d4bb2f29d8bec430634..5cefe477b0b84aab404773ded09d2e16d62fd6e9 100644
+index c5d6067760403d85d38f03b51ff4aa476eff26f3..bd76816de64f8e9a4d07b7c164e01bce6fc82e67 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -408,6 +408,24 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -409,6 +409,24 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      @Deprecated(since = "1.14")
      public boolean isChunkInUse(int x, int z);
  
@@ -418,10 +418,10 @@ index 3171a20c8fcff10a8da3dd822c8bba3f58f59e02..908d612de4e02cf7eeaf168d25ca27fd
              if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
                  matchedPlayers.add(name);
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 3f7dfe0b6d8ad57b34acdca85254029983fabd06..c9689e06da1cee70d63e7063fddd6c91151ee131 100644
+index fcfde5d11a934c31bbf91d40f5a382d4ab329a8e..19507e29cd3587764d308c970da812f067a8755c 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -333,6 +333,24 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -348,6 +348,24 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      public int getEntityId();
  
@@ -446,7 +446,7 @@ index 3f7dfe0b6d8ad57b34acdca85254029983fabd06..c9689e06da1cee70d63e7063fddd6c91
      /**
       * Returns the entity's current fire ticks (ticks before the entity stops
       * being on fire).
-@@ -1376,4 +1394,22 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -1399,4 +1417,22 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      void setImmuneToFire(@Nullable Boolean fireImmune);
      // Purpur end - Fire Immunity API
@@ -470,7 +470,7 @@ index 3f7dfe0b6d8ad57b34acdca85254029983fabd06..c9689e06da1cee70d63e7063fddd6c91
 +    // MultiPaper end - Add MultiPaper API
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index ec1b786f3a19ceb2b6d31810e2bb8f544eb12ac3..c1b650cc618c528a79043acb9f8dc5e0ef4bddb5 100644
+index 81559e992bb344b7a71933447e40bd0ecc7a0c96..172884770d256a3b01115734ec2dcf7045ce2868 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -644,6 +644,82 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM

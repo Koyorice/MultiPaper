@@ -33,16 +33,16 @@ index 6194d6d8952864c71cc4017a639b818e4ecccea9..74d5731ef33fb29271345c82eb637c46
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/com/destroystokyo/paper/console/PaperConsole.java b/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
-index bc7e4e5560708fea89c584b1d8b471f4966f311a..9960dfdd9365b772e1b7d96788c5405926f235b0 100644
+index 0e77ec2dec9ef92458e5c99f195ab48e7128a0dc..56bb714fa0cfd7d39a440438ea753b2b161515b4 100644
 --- a/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
 +++ b/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
-@@ -20,7 +20,7 @@ public final class PaperConsole extends SimpleTerminalConsole {
+@@ -21,7 +21,7 @@ public final class PaperConsole extends SimpleTerminalConsole {
      @Override
      protected LineReader buildReader(LineReaderBuilder builder) {
          builder
 -                .appName("Purpur") // Purpur - Rebrand
 +                .appName("MultiPaper") // Purpur - Rebrand // MultiPaper - Rebrand to MultiPaper
-                 .variable(LineReader.HISTORY_FILE, java.nio.file.Paths.get(".console_history"))
+                 .variable(LineReader.HISTORY_FILE, PaperCacheDir.moveFromServerRootAndGet(".console_history", "console_history"))
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/io/papermc/paper/ServerBuildInfoImpl.java b/src/main/java/io/papermc/paper/ServerBuildInfoImpl.java

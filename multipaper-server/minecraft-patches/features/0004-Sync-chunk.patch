@@ -189,7 +189,7 @@ index bd0d782852f9cfe5bc0b5339ecf4d82c10332ec9..1d37ff6ac199871ea586b18d63d4af6b
      }
  }
 diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/ChunkHolderManager.java b/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/ChunkHolderManager.java
-index 05d374f679919d082064e8f2bb363a419bc9648e..c5d73eb87faf94688805ec6da317c63aade8a1e3 100644
+index e418820359c430b91bb91eb65d137b9cdbe2db4b..4c48c04997d3ec646543a449108411c42a4dbbcb 100644
 --- a/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/ChunkHolderManager.java
 +++ b/ca/spottedleaf/moonrise/patches/chunk_system/scheduling/ChunkHolderManager.java
 @@ -1105,6 +1105,12 @@ public final class ChunkHolderManager {
@@ -432,7 +432,7 @@ index 2122ff56412a2ad412eb8b2f0e4538aab4257bf2..a84e33dec4d7c0a478b55363e1bdd7b3
  
      public static ClientboundBlockEntityDataPacket create(final BlockEntity blockEntity) {
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 6986c0c9d5022738c6362653e78eebbd72806237..37231169aec47e5ab8cf2bf460983feff9699e77 100644
+index d9be20855c952c49555ffc424318a7f1c32f1005..5e3094f9521bc9fba41bc8a512ce0412462375d3 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -759,6 +759,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -460,7 +460,7 @@ index 6986c0c9d5022738c6362653e78eebbd72806237..37231169aec47e5ab8cf2bf460983fef
          this.isSaving = true;
          if (this.playerList != null) {
              LOGGER.info("Saving players");
-@@ -1892,6 +1903,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1891,6 +1902,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          this.updateEffectiveRespawnData();
  
          this.isIteratingOverLevels = true; // Paper - Throw exception on world create while being ticked
@@ -617,7 +617,7 @@ index cd5a325d37f617431ceb568a655701601618198f..f0f8c1730526f9d371fe4c3c6fbebe40
      }
  
 diff --git a/net/minecraft/server/level/ServerChunkCache.java b/net/minecraft/server/level/ServerChunkCache.java
-index c3adbe0753f6a4158f25126ed7443f8a958763d9..2df596b889ed5662f690b466dd958f319f24319f 100644
+index 075e294333115738b25b64a390df323276cf39f9..cbdb24dc0b62d05956a5666664f00fb44524f130 100644
 --- a/net/minecraft/server/level/ServerChunkCache.java
 +++ b/net/minecraft/server/level/ServerChunkCache.java
 @@ -171,7 +171,23 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
@@ -659,7 +659,7 @@ index c3adbe0753f6a4158f25126ed7443f8a958763d9..2df596b889ed5662f690b466dd958f31
          int xc = SectionPos.blockToSectionCoord(pos.getX());
          int zc = SectionPos.blockToSectionCoord(pos.getZ());
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 50a1fe6bd9f7e6cf79e48e1420fbe153c902bddb..25f9a2b4f34427c87a4ca2a2e45ea7a21efc97c5 100644
+index 19c3131f1b970aa0443800dcffd20b996ba8d7d5..dbc883141d7a6b653ef05746b5b458db2d3856dd 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -205,8 +205,10 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -675,7 +675,7 @@ index 50a1fe6bd9f7e6cf79e48e1420fbe153c902bddb..25f9a2b4f34427c87a4ca2a2e45ea7a2
      private final PathTypeCache pathTypesByPosCache = new PathTypeCache();
      private final Set<Mob> navigatingMobs = new ObjectOpenHashSet<>();
      private volatile boolean isUpdatingNavigations;
-@@ -753,7 +755,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -754,7 +756,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                  levelStorage.getDimensionPath(dimension).resolve("entities"),
                  server.forceSynchronousWrites()
              ),

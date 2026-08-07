@@ -5,10 +5,10 @@ Subject: [PATCH] Rebrand to MultiPaper
 
 
 diff --git a/net/minecraft/server/Main.java b/net/minecraft/server/Main.java
-index 1862df44a3319e459b547cebffb16972674856d6..6af61faa374dcd02e03e8d737600fa77684ce9fe 100644
+index 78dc12164734ddd6781459e3824ee78e924777f3..bb4e64709d817d95a249ee6738d7db636cc5637c 100644
 --- a/net/minecraft/server/Main.java
 +++ b/net/minecraft/server/Main.java
-@@ -176,6 +176,17 @@ public class Main {
+@@ -185,6 +185,17 @@ public class Main {
              }
              // Paper end - Detect headless JRE
  
@@ -27,7 +27,7 @@ index 1862df44a3319e459b547cebffb16972674856d6..6af61faa374dcd02e03e8d737600fa77
  
              // Paper start - fix SPIGOT-5824
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index ece422ef99fbb30365b53599e985c1ff005b7477..6986c0c9d5022738c6362653e78eebbd72806237 100644
+index d9402a730568d66110a5f87c6a97f8b510c9a3a6..d9be20855c952c49555ffc424318a7f1c32f1005 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -1024,6 +1024,43 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -74,7 +74,7 @@ index ece422ef99fbb30365b53599e985c1ff005b7477..6986c0c9d5022738c6362653e78eebbd
          LOGGER.info("Stopping server");
          Commands.COMMAND_SENDING_POOL.shutdownNow(); // Paper - Perf: Async command map building; Shutdown and don't bother finishing
          // Purpur start - UPnP Port Forwarding
-@@ -1107,6 +1144,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1106,6 +1143,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              ca.spottedleaf.moonrise.common.util.MoonriseCommon.haltExecutors();
          }
          // Paper end - rewrite chunk system
@@ -87,7 +87,7 @@ index ece422ef99fbb30365b53599e985c1ff005b7477..6986c0c9d5022738c6362653e78eebbd
          // Paper start - Improved watchdog support - move final shutdown items here
          Util.shutdownExecutors();
          this.onServerExit();
-@@ -1704,6 +1747,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1703,6 +1746,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          this.smoothedTickTimeMillis = this.smoothedTickTimeMillis * 0.8F + (float)tickTime / (float)TimeUtil.NANOSECONDS_PER_MILLISECOND * 0.19999999F;
          this.logTickMethodTime(nano);
          profiler.pop();
@@ -95,7 +95,7 @@ index ece422ef99fbb30365b53599e985c1ff005b7477..6986c0c9d5022738c6362653e78eebbd
      }
  
      protected void processPacketsAndTick(final boolean sprinting) {
-@@ -1870,6 +1914,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1869,6 +1913,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              level.explosionDensityCache.clear(); // Paper - Optimize explosions
          }
          this.isIteratingOverLevels = false; // Paper - Throw exception on world create while being ticked
@@ -103,7 +103,7 @@ index ece422ef99fbb30365b53599e985c1ff005b7477..6986c0c9d5022738c6362653e78eebbd
  
          profiler.popPush("connection");
          this.tickConnection();
-@@ -2073,6 +2118,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2072,6 +2117,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              level.setSpawnSettings(level.isSpawningMonsters());
              level.players().forEach(this::sendDifficultyUpdate);
              // Paper end - per level difficulty

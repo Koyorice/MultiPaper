@@ -5,10 +5,10 @@ Subject: [PATCH] Sync game time
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 489ab44fda2cbbdf3a1d8757f091d60274094b9d..791d1c75c249e0177442dafd0411cb444b2b6f45 100644
+index b4dad477fd562b26db7fd7a1764f54491bee32b8..e7987045be11f3b18e51b5a4ff98188269508c19 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1976,7 +1976,14 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1975,7 +1975,14 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          profiler.push("timeSync");
          // Paper start - per-world time
          for (ServerLevel level : this.getAllLevels()) {
@@ -53,10 +53,10 @@ index 27ec27001aad55c9e1c691e3910c08a57b3322c9..555179ff409c8c3a40f5a4c0622bcc83
          // Paper end - per-world time
          source.sendSuccess(() -> Component.translatable("commands.time.set.time_marker", clock.getRegisteredName(), timeMarkerId.identifier().toString()), true);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 0b55c25e56de6100171e2296dcf3862e8cb26392..899030bbb380b59a322baf74576e1913680fa6d3 100644
+index 1935652db020f1b1714299590802b074f6b5e804..ec7f72a05edbcabb24eae2b69eb907d3914436c9 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -844,6 +844,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -845,6 +845,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
  
                  if (event.callEvent()) {
                      this.clockManager().setTotalTicks(defaultClock.get(), currentTime + event.getSkipAmount());

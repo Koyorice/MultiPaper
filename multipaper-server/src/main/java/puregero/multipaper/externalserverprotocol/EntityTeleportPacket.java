@@ -29,6 +29,7 @@ public class EntityTeleportPacket extends ExternalServerPacket {
     private final boolean asPassenger;
     private final Set<Relative> relatives;
     private final PlayerTeleportEvent.TeleportCause cause;
+    private final TeleportTransition.PassengerTeleportationMode passengerTeleportationMode;
 
     public EntityTeleportPacket(Entity entity, TeleportTransition transition) {
         this.entity = entity.getUUID();
@@ -42,6 +43,7 @@ public class EntityTeleportPacket extends ExternalServerPacket {
         this.asPassenger = transition.asPassenger();
         this.relatives = transition.relatives();
         this.cause = transition.cause();
+        this.passengerTeleportationMode = transition.passengerTeleportationMode();
     }
 
     public EntityTeleportPacket(RegistryFriendlyByteBuf in) {
@@ -56,6 +58,7 @@ public class EntityTeleportPacket extends ExternalServerPacket {
         this.asPassenger = in.readBoolean();
         this.relatives = Relative.unpack(in.readInt());
         this.cause = in.readEnum(PlayerTeleportEvent.TeleportCause.class);
+        this.passengerTeleportationMode = in.readEnum(TeleportTransition.PassengerTeleportationMode.class);
     }
 
     @Override
@@ -71,6 +74,7 @@ public class EntityTeleportPacket extends ExternalServerPacket {
         out.writeBoolean(this.asPassenger);
         out.writeInt(Relative.pack(this.relatives));
         out.writeEnum(this.cause);
+        out.writeEnum(this.passengerTeleportationMode);
     }
 
     @Override
@@ -94,7 +98,8 @@ public class EntityTeleportPacket extends ExternalServerPacket {
                         this.asPassenger,
                         this.relatives,
                         TeleportTransition.DO_NOTHING,
-                        this.cause
+                        this.cause,
+                        this.passengerTeleportationMode
                 ));
             }
         });

@@ -18,7 +18,7 @@ index f1ef191a9ca388112021959402a4912c54e177f7..5c0f60f01dc27c043563edd3cb4b7939
  
      interface OutgoingChat {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-index b5fb354481ac9682e963411ef0530a12118eb0b9..dcb5ed71307b8c4a14137a33f482958c2de98d88 100644
+index 374d39057f4913ff9586205ee2cf305a99279bae..8b64e79adec69017de6f47b00632817ba32b2469 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 @@ -81,7 +81,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
@@ -45,7 +45,7 @@ index b5fb354481ac9682e963411ef0530a12118eb0b9..dcb5ed71307b8c4a14137a33f482958c
      }
  
      @Override
-@@ -837,7 +837,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
+@@ -838,7 +838,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
  
      @Override
      public void setSaturation(float value) {
@@ -54,7 +54,7 @@ index b5fb354481ac9682e963411ef0530a12118eb0b9..dcb5ed71307b8c4a14137a33f482958c
      }
  
      @Override
-@@ -847,7 +847,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
+@@ -848,7 +848,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
  
      @Override
      public void setFoodLevel(int value) {
@@ -64,7 +64,7 @@ index b5fb354481ac9682e963411ef0530a12118eb0b9..dcb5ed71307b8c4a14137a33f482958c
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b2eafcc976b00d18488bbdf0fba89736507a1519..cfc46d764a166ce0351bcf426286b118e899144f 100644
+index d64e5a4a9ce5980448f26894fd9277fb37ed94cf..ff7318b321e45918a70e1fcfd283aba087fdf012 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -565,6 +565,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
@@ -83,7 +83,7 @@ index b2eafcc976b00d18488bbdf0fba89736507a1519..cfc46d764a166ce0351bcf426286b118
      }
  
      @Override
-@@ -1430,6 +1432,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -1437,6 +1439,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
  
      @Override
      public void saveData() {

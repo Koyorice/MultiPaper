@@ -5,10 +5,10 @@ Subject: [PATCH] Sync world
 
 
 diff --git a/src/main/java/io/papermc/paper/world/migration/WorldFolderMigration.java b/src/main/java/io/papermc/paper/world/migration/WorldFolderMigration.java
-index 77fb09a15bcefaeb5016fcda53cd6a0c9e604ef8..cdaf43e3b5dea26427d22d6e883ae2b5ac7998d3 100644
+index 3e72dd125e5e7d577f0c1187d40b17cc6c2fea5a..b9b8d06380398340c982845814bdf451640c1362 100644
 --- a/src/main/java/io/papermc/paper/world/migration/WorldFolderMigration.java
 +++ b/src/main/java/io/papermc/paper/world/migration/WorldFolderMigration.java
-@@ -39,6 +39,7 @@ public final class WorldFolderMigration {
+@@ -44,6 +44,7 @@ public final class WorldFolderMigration {
          final ResourceKey<LevelStem> stemKey,
          final ResourceKey<Level> dimensionKey
      ) throws IOException {
@@ -16,7 +16,7 @@ index 77fb09a15bcefaeb5016fcda53cd6a0c9e604ef8..cdaf43e3b5dea26427d22d6e883ae2b5
          final WorldMigrationContext context = new WorldMigrationContext(rootAccess, registryAccess, worldName, stemKey, dimensionKey);
          final MigrationMode mode = classifyStartupMigration(context);
          if (mode != MigrationMode.NO_OP) {
-@@ -58,6 +59,7 @@ public final class WorldFolderMigration {
+@@ -63,6 +64,7 @@ public final class WorldFolderMigration {
          final ResourceKey<LevelStem> stemKey,
          final ResourceKey<Level> dimensionKey
      ) throws IOException {
@@ -25,10 +25,10 @@ index 77fb09a15bcefaeb5016fcda53cd6a0c9e604ef8..cdaf43e3b5dea26427d22d6e883ae2b5
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 18a700c8fff2a6cdaa29722fbcba258d94ea98d6..3be0dfb63983baec57110581dfe747791235b8b4 100644
+index 6c02d75d615be10044b93dbf0c0870609a926ae6..10b5e6720f1710600d48f1d7d7c69a4b73163d57 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1486,6 +1486,7 @@ public final class CraftServer implements Server {
+@@ -1485,6 +1485,7 @@ public final class CraftServer implements Server {
              return;
          }
          this.worlds.put(world.getName().toLowerCase(Locale.ROOT), world);
@@ -37,7 +37,7 @@ index 18a700c8fff2a6cdaa29722fbcba258d94ea98d6..3be0dfb63983baec57110581dfe74779
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d67ef9e5b334ad107573fba224537b2b7c0db865..c17770bef41f13e253e99bc7c1011af5b59cd0a6 100644
+index afc0a63c5f08de80915406c5a1f67eeb3a8f71a2..b952cf88dad5b5c85262cc3387813046ef0bf7bd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -830,6 +830,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {

@@ -5,10 +5,10 @@ Subject: [PATCH] Sync entity
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 9fbb6c5350d2d254146d3b9527b5efba09d66e79..bf08b11a240529c2a5427194ae39da86cfdd796b 100644
+index ba37f6fdd3aef1328af7862def0ba8fd6af671a3..d4edcb7de58ab2321175e92e68a6efe13e8ed578 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -98,7 +98,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -101,7 +101,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      protected Entity entity;
      private final EntityType entityType;
      private EntityDamageEvent lastDamageEvent;

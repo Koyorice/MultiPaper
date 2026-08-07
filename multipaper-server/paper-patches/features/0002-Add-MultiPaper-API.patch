@@ -56,7 +56,7 @@ index f020f310c4bca49a23de91bea72ccd9941c0b03c..e70991806f871cd136a295b0352eea64
      public boolean isForceLoaded() {
          return this.getWorld().isChunkForceLoaded(this.getX(), this.getZ());
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 495da134739f278e0bcd4d2f377fa8b353513d0b..e39d5678adac833996b0c9e89c4de178bb5e94b4 100644
+index ec9dd18d380db6e153dfc704a86b578fc0458eb5..0f36adc7e0652b05f272fcae150d0811907e9268 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -285,6 +285,10 @@ public final class CraftServer implements Server {
@@ -156,7 +156,7 @@ index 495da134739f278e0bcd4d2f377fa8b353513d0b..e39d5678adac833996b0c9e89c4de178
      @Override
      public List<World> getWorlds() {
          return new ArrayList<World>(this.worlds.values());
-@@ -2266,7 +2310,7 @@ public final class CraftServer implements Server {
+@@ -2265,7 +2309,7 @@ public final class CraftServer implements Server {
              }
          }
  
@@ -165,7 +165,7 @@ index 495da134739f278e0bcd4d2f377fa8b353513d0b..e39d5678adac833996b0c9e89c4de178
  
          return players.toArray(new OfflinePlayer[players.size()]);
      }
-@@ -2817,14 +2861,14 @@ public final class CraftServer implements Server {
+@@ -2816,14 +2860,14 @@ public final class CraftServer implements Server {
  
          @Override
          public void broadcast(BaseComponent component) {
@@ -183,7 +183,7 @@ index 495da134739f278e0bcd4d2f377fa8b353513d0b..e39d5678adac833996b0c9e89c4de178
              }
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index c107bc31bfd5cc01768b5abb4b4bfb173ea579a2..d67ef9e5b334ad107573fba224537b2b7c0db865 100644
+index a21019b0f89c3732935380feb599da28ce2428d9..afc0a63c5f08de80915406c5a1f67eeb3a8f71a2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -523,6 +523,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
@@ -206,10 +206,10 @@ index c107bc31bfd5cc01768b5abb4b4bfb173ea579a2..d67ef9e5b334ad107573fba224537b2b
      public boolean loadChunk(int x, int z, boolean generate) {
          org.spigotmc.AsyncCatcher.catchOp("chunk load"); // Spigot
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-index bf98fc87b0a2146455f7c56dca6584bb6ae6fb76..be1c8de2de9e10b948f22da396b76e9b190bb364 100644
+index 72aacb573365c521609ce35af6b430f525edf3e0..c8ae78c06292bd06b92b02223f0d16d20dab7c12 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-@@ -398,6 +398,18 @@ public class CraftBlock implements Block {
+@@ -411,6 +411,18 @@ public class CraftBlock implements Block {
          return this.isBlockFaceIndirectlyPowered(face) ? Redstone.SIGNAL_MAX : Redstone.SIGNAL_MIN;
      }
  
@@ -229,10 +229,10 @@ index bf98fc87b0a2146455f7c56dca6584bb6ae6fb76..be1c8de2de9e10b948f22da396b76e9b
      public boolean isEmpty() {
          return this.getBlockState().isAir();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 71d14d016e97e3fb93d2c10862afd0c314b9a367..9fbb6c5350d2d254146d3b9527b5efba09d66e79 100644
+index 208d366dca73c64deb2c434821b10689302466ee..ba37f6fdd3aef1328af7862def0ba8fd6af671a3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -406,6 +406,18 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -420,6 +420,18 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          return this.getHandle().getId();
      }
  
@@ -251,7 +251,7 @@ index 71d14d016e97e3fb93d2c10862afd0c314b9a367..9fbb6c5350d2d254146d3b9527b5efba
      @Override
      public int getFireTicks() {
          return this.getHandle().getRemainingFireTicks();
-@@ -1370,4 +1382,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -1395,4 +1407,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          return !getHandle().dismountsUnderwater();
      }
      // Purpur end - Ridables
@@ -269,7 +269,7 @@ index 71d14d016e97e3fb93d2c10862afd0c314b9a367..9fbb6c5350d2d254146d3b9527b5efba
 +    // MultiPaper end - Add MultiPaper API
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 1becf2db2f084e4fe2062520430175b2b1095329..b2eafcc976b00d18488bbdf0fba89736507a1519 100644
+index 2571b73f9dbe7cb91560adbf06f0c5eb1dae8bdb..d64e5a4a9ce5980448f26894fd9277fb37ed94cf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -235,6 +235,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
@@ -283,7 +283,7 @@ index 1becf2db2f084e4fe2062520430175b2b1095329..b2eafcc976b00d18488bbdf0fba89736
      private final ConversationTracker conversationTracker = new ConversationTracker();
      private final Map<UUID, Set<WeakReference<Plugin>>> invertedVisibilityEntities = new HashMap<>();
      private final Set<UUID> unlistedEntities = new HashSet<>(); // Paper - Add Listing API for Player
-@@ -1495,6 +1499,68 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -1502,6 +1506,68 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
          return new CraftInput(this.getHandle().getLastClientInput());
      }
  
@@ -352,7 +352,7 @@ index 1becf2db2f084e4fe2062520430175b2b1095329..b2eafcc976b00d18488bbdf0fba89736
      @Override
      public Location getBedLocation() {
          Preconditions.checkState(this.isSleeping(), "Not sleeping");
-@@ -2238,6 +2304,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2245,6 +2311,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
              handle.expToDrop = data.getIntOr("expToDrop", 0);
              handle.keepLevel = data.getBooleanOr("keepLevel", false);
          });
@@ -361,7 +361,7 @@ index 1becf2db2f084e4fe2062520430175b2b1095329..b2eafcc976b00d18488bbdf0fba89736
      }
  
      public void setExtraData(ValueOutput output) {
-@@ -2259,6 +2327,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2266,6 +2334,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
          paper.putLong("LastLogin", handle.loginTime);
          paper.putLong("LastSeen", System.currentTimeMillis());
          // Paper end
